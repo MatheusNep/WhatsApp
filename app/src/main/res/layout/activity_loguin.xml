@@ -21,7 +21,7 @@
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editText"
+        android:id="@+id/nomeId"
         android:hint="Digite seu nome"
         android:layout_below="@+id/imageView"
         android:layout_alignParentRight="true"
@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:inputType="number"
         android:ems="10"
-        android:id="@+id/editText2"
+        android:id="@+id/ddiId"
         android:hint="+55"
         android:textColor="@color/textColorPrimary"
         android:layout_centerVertical="true"
@@ -45,10 +45,10 @@
         android:layout_height="wrap_content"
         android:inputType="number"
         android:ems="10"
-        android:id="@+id/editText3"
-        android:layout_alignTop="@+id/editText2"
-        android:layout_toRightOf="@+id/editText2"
-        android:layout_toEndOf="@+id/editText2"
+        android:id="@+id/dddId"
+        android:layout_alignTop="@+id/ddiId"
+        android:layout_toRightOf="@+id/ddiId"
+        android:layout_toEndOf="@+id/ddiId"
         android:hint="11"
         android:textColor="@color/textColorPrimary" />
 
@@ -57,21 +57,21 @@
         android:layout_height="wrap_content"
         android:inputType="number"
         android:ems="10"
-        android:id="@+id/editText4"
-        android:layout_alignTop="@+id/editText3"
-        android:layout_toRightOf="@+id/editText3"
-        android:layout_toEndOf="@+id/editText3"
-        android:hint="999999999"
+        android:id="@+id/idEdit_telefone"
+        android:layout_alignTop="@+id/dddId"
+        android:layout_toRightOf="@+id/dddId"
+        android:layout_toEndOf="@+id/dddId"
+        android:hint="99999-9999"
         android:textColor="@color/textColorPrimary" />
 
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/botaoCadastrar"
-        android:id="@+id/button"
+        android:id="@+id/botaoCasastrarId"
         android:layout_marginTop="38dp"
         android:background="@color/colorPrimaryDark"
-        android:layout_below="@+id/editText2"
+        android:layout_below="@+id/ddiId"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 </RelativeLayout>
