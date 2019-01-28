@@ -3,6 +3,7 @@ package br.com.whatsappandroid.cursoandroid.whatsapp.activity;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -64,29 +65,39 @@ public class LoguinActivity extends AppCompatActivity {
                 int numeroRandomico = randomico.nextInt(9999 - 1000)+1000;
 
                 String token = String.valueOf(numeroRandomico);
+                String mensagemEnvio = "Whatsapp código de confirmação:" + token;
+
 
                 Log.i("Token", "T:" +token);
 
                 Preferencias preferencias = new Preferencias(LoguinActivity.this);
                 preferencias.salvarUsuarioPreferencias(nomeUsuario, telefoneSemFormatacao, token);
 
+                boolean enviadoSMS = envioSMS("+"+ telefoneSemFormatacao, mensagemEnvio);
+
+                /*
                 HashMap<String, String> usuario = preferencias.getDadosUsuario();
 
                 Log.i("TOKEN", "T: " + usuario.get("token") + "NOME: " + usuario.get("nome") +
-                        "Tell: " + usuario.get("telefone"));
+                        "Tell: " + usuario.get("telefone"));*/
             }
         });
 
+    }
+    private boolean envioSMS(String telefone, String mensagem){
+        try{
 
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage(telefone, null, mensagem, null, null);
 
+            return true;
 
+        }catch (Exception e){
 
+            e.printStackTrace();
+            return false;
 
-
-
-
-
-
+        }
 
     }
 }
