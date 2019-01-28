@@ -11,9 +11,12 @@ import android.widget.EditText;
 import com.github.rtoshiro.util.format.SimpleMaskFormatter;
 import com.github.rtoshiro.util.format.text.MaskTextWatcher;
 
+import java.util.HashMap;
 import java.util.Random;
+import java.util.StringTokenizer;
 
 import br.com.whatsappandroid.cursoandroid.whatsapp.R;
+import br.com.whatsappandroid.cursoandroid.whatsapp.helper.Preferencias;
 
 public class LoguinActivity extends AppCompatActivity {
     private EditText nome;
@@ -63,6 +66,14 @@ public class LoguinActivity extends AppCompatActivity {
                 String token = String.valueOf(numeroRandomico);
 
                 Log.i("Token", "T:" +token);
+
+                Preferencias preferencias = new Preferencias(LoguinActivity.this);
+                preferencias.salvarUsuarioPreferencias(nomeUsuario, telefoneSemFormatacao, token);
+
+                HashMap<String, String> usuario = preferencias.getDadosUsuario();
+
+                Log.i("TOKEN", "T: " + usuario.get("token") + "NOME: " + usuario.get("nome") +
+                        "Tell: " + usuario.get("telefone"));
             }
         });
 
