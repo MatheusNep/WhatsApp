@@ -32,10 +32,10 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/texto_validar"
-        android:id="@+id/button2"
+        android:id="@+id/botaoValidarId"
         android:background="@color/colorPrimaryDark"
         android:textColor="@color/textColorPrimary"
-        android:layout_below="@+id/editText5"
+        android:layout_below="@+id/textValidadorId"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
@@ -54,8 +54,9 @@
         android:layout_height="wrap_content"
         android:inputType="number"
         android:ems="10"
-        android:id="@+id/editText5"
+        android:id="@+id/textValidadorId"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:hint="Digite o código" />
+        android:hint="Digite o código"
+        android:textColor="@color/textColorPrimary" />
 </RelativeLayout>

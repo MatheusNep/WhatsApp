@@ -2,6 +2,7 @@ package br.com.whatsappandroid.cursoandroid.whatsapp.activity;
 
 import android.Manifest;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.support.v7.app.AlertDialog;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.github.rtoshiro.util.format.SimpleMaskFormatter;
 import com.github.rtoshiro.util.format.text.MaskTextWatcher;
@@ -85,6 +87,16 @@ public class LoguinActivity extends AppCompatActivity {
                 preferencias.salvarUsuarioPreferencias(nomeUsuario, telefoneSemFormatacao, token);
 
                 boolean enviadoSMS = envioSMS("+"+ telefoneSemFormatacao, mensagemEnvio);
+
+                if (enviadoSMS){
+                    Intent intent = new Intent(LoguinActivity.this, ValidadorActivity.class);
+                    startActivity(intent);
+                    finish();
+
+                }else{
+                    Toast.makeText(LoguinActivity.this, "Problema em enviar o SMS, tente novamente.", Toast.LENGTH_LONG).show();
+
+                }
 
                 /*
                 HashMap<String, String> usuario = preferencias.getDadosUsuario();
