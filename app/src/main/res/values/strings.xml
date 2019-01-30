@@ -8,4 +8,6 @@
     <string name="textoCadastreC">Não tem conta? Cadastre-se</string>
     <string name="cadastrar">abrirCadastroUsuario()</string>
     <string name="botaoSair">Sair</string>
+    <string name="item_configuracoes">Configurações</string>
+    <string name="item_sair">Sair</string>
 </resources>
