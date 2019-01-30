@@ -59,5 +59,6 @@
         android:text="@string/botaoCadastrar"
         android:id="@+id/botao_cadastrarId"
         android:layout_below="@+id/edit_senh_cadastrar"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:theme="@style/botaoPadrao" />
 </RelativeLayout>
