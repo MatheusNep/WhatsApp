@@ -12,6 +12,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthEmailException;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 
 import br.com.whatsappandroid.cursoandroid.whatsapp.R;
@@ -64,8 +68,25 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
                     FirebaseUser  usuarioFirebase = task.getResult().getUser();
                     usuario.setId(usuarioFirebase.getUid());
                     usuario.salvar();
+
+                    autenticacao.signOut();
+                    finish();
                 }else{
-                    Toast.makeText(CadastroUsuarioActivity.this, "Erro ao cadastrar usuário", Toast.LENGTH_LONG).show();
+                    String erroExessao = "";
+                    try{
+                        throw task.getException();
+
+                    }catch (FirebaseAuthWeakPasswordException e){
+                        erroExessao = "Digite uma senha mais forte, contendo mais caracteres contendo letras e números!";
+                    } catch (FirebaseAuthInvalidCredentialsException e) {
+                        erroExessao = "O e-mail digitado é inválido, digite um novo e-mail!";
+                    } catch (FirebaseAuthUserCollisionException e) {
+                        erroExessao = "Esse e-mail já está em uso no App!";
+                    } catch (Exception e) {
+                        erroExessao = "Erro ao efetuar o cadastro!";
+                        e.printStackTrace();
+                    }
+                    Toast.makeText(CadastroUsuarioActivity.this, "Erro: "+ erroExessao, Toast.LENGTH_LONG).show();
                 }
             }
         });

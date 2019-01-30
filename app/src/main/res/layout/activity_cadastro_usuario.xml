@@ -48,10 +48,10 @@
         android:inputType="textEmailAddress"
         android:ems="10"
         android:id="@+id/edit_email_cadastro"
-        android:layout_centerVertical="true"
+        android:hint="Digite seu e-mail"
+        android:layout_below="@+id/edit_nome_cadastro"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:hint="Digite seu e-mail" />
+        android:layout_alignParentStart="true" />
 
     <Button
         android:layout_width="fill_parent"
