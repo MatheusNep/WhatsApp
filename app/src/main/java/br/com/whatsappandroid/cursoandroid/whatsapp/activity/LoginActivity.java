@@ -33,7 +33,7 @@ public class LoginActivity extends AppCompatActivity {
 
         referenciaFirebase = ConfiguracaoFirebase.getFirebase();
 
-        referenciaFirebase.child("pontos").setValue(800);
+
 
 
 
