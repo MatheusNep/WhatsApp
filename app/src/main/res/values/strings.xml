@@ -6,4 +6,5 @@
     <string name="botaoLogar">Logar</string>
     <string name="textoCadastre">Não tem conta? Cadastre</string>
     <string name="textoCadastreC">Não tem conta? Cadastre-se</string>
+    <string name="cadastrar">abrirCadastroUsuario()</string>
 </resources>

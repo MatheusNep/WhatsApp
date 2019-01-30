@@ -6,32 +6,40 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.firebase.database.DatabaseReference;
+
 import br.com.whatsappandroid.cursoandroid.whatsapp.R;
+import br.com.whatsappandroid.cursoandroid.whatsapp.config.ConfiguracaoFirebase;
 
 public class LoginActivity extends AppCompatActivity {
     private TextView cadastrarTela;
-
-
-
+    private DatabaseReference referenciaFirebase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_loguin);
+        setContentView(R.layout.activity_login);
 
         cadastrarTela = (TextView) findViewById(R.id.text_cadastroId);
 
         cadastrarTela.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                abrirCadastroUsuario();
+                abrirCadastroUsuario(v);
             }
+
+
         });
+
+        referenciaFirebase = ConfiguracaoFirebase.getFirebase();
+
+        referenciaFirebase.child("pontos").setValue(800);
+
 
 
     }
-    public void abrirCadastroUsuario(){
-        Intent intent = new Intent(LoginActivity.this, CadastroUsarioActivity.class);
+    public void abrirCadastroUsuario(View view){
+        Intent intent = new Intent(LoginActivity.this, CadastroUsuarioActivity.class);
         startActivity(intent);
     }
 
