@@ -7,4 +7,5 @@
     <string name="textoCadastre">Não tem conta? Cadastre</string>
     <string name="textoCadastreC">Não tem conta? Cadastre-se</string>
     <string name="cadastrar">abrirCadastroUsuario()</string>
+    <string name="botaoSair">Sair</string>
 </resources>

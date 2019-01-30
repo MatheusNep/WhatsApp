@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
         android:ems="10"
-        android:id="@+id/editLoguinEmailId"
+        android:id="@+id/edit_loguin_email"
         android:hint="Digite seu Email"
         android:layout_below="@+id/imageView"
         android:layout_alignParentLeft="true"
@@ -36,9 +36,9 @@
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:ems="10"
-        android:id="@+id/edit_Loguin_SenhaId"
+        android:id="@+id/edit_loguin_senha"
         android:hint="Digite seu senha"
-        android:layout_below="@+id/editLoguinEmailId"
+        android:layout_below="@+id/edit_loguin_email"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
@@ -46,8 +46,8 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/botaoLogar"
-        android:id="@+id/button"
-        android:layout_below="@+id/edit_Loguin_SenhaId"
+        android:id="@+id/botao_logar"
+        android:layout_below="@+id/edit_loguin_senha"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:background="@color/textColorPrimary" />
@@ -58,7 +58,7 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="@string/textoCadastreC"
         android:id="@+id/text_cadastroId"
-        android:layout_below="@+id/button"
+        android:layout_below="@+id/botao_logar"
         android:layout_centerHorizontal="true"
         android:textColor="@color/textColorPrimary" />
 
