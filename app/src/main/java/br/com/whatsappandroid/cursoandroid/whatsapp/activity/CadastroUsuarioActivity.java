@@ -1,5 +1,6 @@
 package br.com.whatsappandroid.cursoandroid.whatsapp.activity;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import br.com.whatsappandroid.cursoandroid.whatsapp.R;
 import br.com.whatsappandroid.cursoandroid.whatsapp.config.ConfiguracaoFirebase;
+import br.com.whatsappandroid.cursoandroid.whatsapp.helper.Base64Custon;
 import br.com.whatsappandroid.cursoandroid.whatsapp.model.Usuario;
 
 public class CadastroUsuarioActivity extends AppCompatActivity {
@@ -51,6 +53,7 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
                 usuario.setSenha(senhaUsuario.getText().toString());
 
                 cadastrarUsuario();
+
             }
         });
 
@@ -65,12 +68,12 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
                     Toast.makeText(CadastroUsuarioActivity.this, "Sucesso ao cadastrar usuário", Toast.LENGTH_LONG).show();
-                    FirebaseUser  usuarioFirebase = task.getResult().getUser();
-                    usuario.setId(usuarioFirebase.getUid());
+                    String identificador = Base64Custon.codificarBase64(usuario.getEmail());
+                    usuario.setId(identificador);
                     usuario.salvar();
+                    abrirLoginUsuario();
 
-                    autenticacao.signOut();
-                    finish();
+
                 }else{
                     String erroExessao = "";
                     try{
@@ -91,5 +94,11 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void abrirLoginUsuario(){
+        Intent intent = new Intent(CadastroUsuarioActivity.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 }
