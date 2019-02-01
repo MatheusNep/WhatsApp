@@ -96,7 +96,8 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
 
     }
 
-    public void abrirLoginUsuario(){
+
+    private void abrirLoginUsuario(){
         Intent intent = new Intent(CadastroUsuarioActivity.this, LoginActivity.class);
         startActivity(intent);
         finish();
