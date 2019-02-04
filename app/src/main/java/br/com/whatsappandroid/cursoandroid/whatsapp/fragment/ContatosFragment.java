@@ -20,6 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 import br.com.whatsappandroid.cursoandroid.whatsapp.R;
+import br.com.whatsappandroid.cursoandroid.whatsapp.adapter.ContatoAdapter;
 import br.com.whatsappandroid.cursoandroid.whatsapp.config.ConfiguracaoFirebase;
 import br.com.whatsappandroid.cursoandroid.whatsapp.helper.Preferencias;
 import br.com.whatsappandroid.cursoandroid.whatsapp.model.Contato;
@@ -31,7 +32,7 @@ public class ContatosFragment extends Fragment {
 
     private ListView listView;
     private ArrayAdapter adapter;
-    private ArrayList<String> contatos;
+    private ArrayList<Contato> contatos;
     private DatabaseReference firebase;
     private ValueEventListener valueEventListenerContatos;
 
@@ -63,11 +64,12 @@ public class ContatosFragment extends Fragment {
         contatos = new ArrayList<>();
 
         listView = (ListView) view.findViewById(R.id.lv_contatos);
-        adapter = new ArrayAdapter(
+        /*adapter = new ArrayAdapter(
                     getActivity(),
                     R.layout.lista_contatos,
                     contatos
-        );
+        );*/
+        adapter = new ContatoAdapter(getActivity(),contatos);
         listView.setAdapter(adapter);
         Preferencias preferencias = new Preferencias(getActivity());
         String identificadorUsuarioLogado = preferencias.getIdentificador();
@@ -81,7 +83,7 @@ public class ContatosFragment extends Fragment {
                 contatos.clear();
                 for (DataSnapshot dados: dataSnapshot.getChildren()){
                     Contato contato = dados.getValue(Contato.class);
-                    contatos.add(contato.getNome());
+                    contatos.add(contato);
                 }
                 adapter.notifyDataSetChanged();
             }
