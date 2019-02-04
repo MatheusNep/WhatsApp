@@ -6,6 +6,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+import java.util.ArrayList;
 
 import br.com.whatsappandroid.cursoandroid.whatsapp.R;
 
@@ -14,6 +18,9 @@ import br.com.whatsappandroid.cursoandroid.whatsapp.R;
  */
 public class ContatosFragment extends Fragment {
 
+    private ListView listView;
+    private ArrayAdapter adapter;
+    private ArrayList<String> contatos;
 
     public ContatosFragment() {
         // Required empty public constructor
@@ -24,7 +31,19 @@ public class ContatosFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_contatos, container, false);
+        View view = inflater.inflate(R.layout.fragment_contatos, container, false);
+
+        contatos = new ArrayList<>();
+
+        listView = (ListView) view.findViewById(R.id.lv_contatos);
+        adapter = new ArrayAdapter(
+                    getActivity(),
+                    R.layout.lista_contatos,
+                    contatos
+        );
+        listView.setAdapter(adapter);
+
+        return view;
     }
 
 }
