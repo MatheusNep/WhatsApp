@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                                 firebase = ConfiguracaoFirebase.getFirebase();
-                                firebase = firebase.child("Contatos")
+                                firebase = firebase.child("contatos")
                                         .child(identificadorUsuarioLoagado)
                                         .child(identificadorContato);
                                 Contato contato = new Contato();
