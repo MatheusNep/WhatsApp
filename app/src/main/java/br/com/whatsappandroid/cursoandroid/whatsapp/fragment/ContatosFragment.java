@@ -59,7 +59,7 @@ public class ContatosFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_contatos, container, false);
@@ -103,6 +103,10 @@ public class ContatosFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 Intent intent =  new Intent(getActivity(), ConversaActivity.class);
+
+                Contato contato = contatos.get(position);
+                intent.putExtra("nome", contato.getNome());
+                intent.putExtra("email", contato.getEmail());
                 startActivity(intent);
             }
         });
