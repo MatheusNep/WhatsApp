@@ -4,6 +4,7 @@ public class Conversa {
     private String idUsuario;
     private String nome;
     private String mensagem;
+
     public Conversa() {
     }
 
