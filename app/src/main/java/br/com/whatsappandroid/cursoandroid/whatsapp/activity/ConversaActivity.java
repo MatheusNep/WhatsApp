@@ -24,12 +24,14 @@ import br.com.whatsappandroid.cursoandroid.whatsapp.adapter.MensagemAdapter;
 import br.com.whatsappandroid.cursoandroid.whatsapp.config.ConfiguracaoFirebase;
 import br.com.whatsappandroid.cursoandroid.whatsapp.helper.Base64Custon;
 import br.com.whatsappandroid.cursoandroid.whatsapp.helper.Preferencias;
+import br.com.whatsappandroid.cursoandroid.whatsapp.model.Conversa;
 import br.com.whatsappandroid.cursoandroid.whatsapp.model.Mensagem;
 
 public class ConversaActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private String nomeUsuarioDestinatario;
+    private String nomeUsuarioRemetente;
     private EditText editMensagem;
     private ImageButton botaoEnviar;
     private ListView listView;
@@ -53,6 +55,7 @@ public class ConversaActivity extends AppCompatActivity {
 
         Preferencias preferencias = new Preferencias(ConversaActivity.this);
         idUsuarioRemetente = preferencias.getIdentificador();
+        nomeUsuarioRemetente = preferencias.getNome();
 
         Bundle extra = getIntent().getExtras();
 
@@ -109,7 +112,37 @@ public class ConversaActivity extends AppCompatActivity {
                     mensagem.setIdMensagem(idUsuarioRemetente);
                     mensagem.setMensagem(textoMensagem);
 
-                    salvarMensagem(idUsuarioRemetente, idUsuarioDestinatario, mensagem);
+                    Boolean retornoMensagemRemetente = salvarMensagem(idUsuarioRemetente, idUsuarioDestinatario, mensagem);
+                    if (!retornoMensagemRemetente){
+                        Toast.makeText(ConversaActivity.this, "Problema em salvar a mensagem, tente novamente!", Toast.LENGTH_LONG).show();
+                    }else {
+                        Boolean retornoMensagemDestinatario = salvarMensagem(idUsuarioDestinatario, idUsuarioRemetente, mensagem);
+                        if (!retornoMensagemDestinatario){
+                            Toast.makeText(ConversaActivity.this, "Problema em enviar a mensagem, tente novamente!", Toast.LENGTH_LONG).show();
+                        }
+                    }
+
+                    Conversa conversa = new Conversa();
+                    conversa.setIdUsuario(idUsuarioDestinatario);
+                    conversa.setNome(nomeUsuarioDestinatario);
+                    conversa.setMensagem(textoMensagem);
+                    Boolean retornoConversaRemetente = salvarConversas(idUsuarioRemetente, idUsuarioDestinatario, conversa);
+                    if (!retornoConversaRemetente){
+                        Toast.makeText(ConversaActivity.this, "Problema ao salvar conversa, tente novamente!", Toast.LENGTH_LONG).show();
+                    }else {
+                        conversa = new Conversa();
+                        conversa.setIdUsuario(idUsuarioRemetente);
+                        conversa.setNome(nomeUsuarioRemetente);
+                        conversa.setMensagem(textoMensagem);
+                        Boolean retornoConversaDestinatario = salvarConversas(idUsuarioDestinatario, idUsuarioRemetente, conversa);
+                        if (!retornoConversaDestinatario){
+                            Toast.makeText(ConversaActivity.this, "Problema ao salvar conversa, tente novamente!", Toast.LENGTH_LONG).show();
+                        }
+
+                    }
+
+
+
 
                     editMensagem.setText("");
 
@@ -133,6 +166,18 @@ public class ConversaActivity extends AppCompatActivity {
             return false;
         }
 
+    }
+
+    private boolean salvarConversas(String idRemetente, String idDestinatario, Conversa conversa){
+        try{
+            firebase = ConfiguracaoFirebase.getFirebase().child("conversas");
+            firebase.child(idRemetente).child(idDestinatario).setValue(conversa);
+            return true;
+
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override

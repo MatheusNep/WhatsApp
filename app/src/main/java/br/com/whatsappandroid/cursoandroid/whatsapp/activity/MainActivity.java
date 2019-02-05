@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
 
                     identificadorContato = Base64Custon.codificarBase64(emailContato);
 
-                    firebase = ConfiguracaoFirebase.getFirebase().child("usuários").child(identificadorContato);
+                    firebase = ConfiguracaoFirebase.getFirebase().child("usuarios").child(identificadorContato);
 
                     firebase.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override

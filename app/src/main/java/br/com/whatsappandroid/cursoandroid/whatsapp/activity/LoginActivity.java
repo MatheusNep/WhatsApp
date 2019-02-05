@@ -19,7 +19,10 @@ import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 import br.com.whatsappandroid.cursoandroid.whatsapp.R;
 import br.com.whatsappandroid.cursoandroid.whatsapp.config.ConfiguracaoFirebase;
@@ -29,13 +32,16 @@ import br.com.whatsappandroid.cursoandroid.whatsapp.model.Usuario;
 
 public class LoginActivity extends AppCompatActivity {
     private TextView cadastrarTela;
-    private DatabaseReference referenciaFirebase;
+    private DatabaseReference firebase;
+    private ValueEventListener valueEventListenerUsuario;
+    private String identificarUsuarioLogado;
 
     private EditText email;
     private EditText senha;
     private Button botaoLogar;
     private Usuario usuario;
     private FirebaseAuth autenticacao;
+
 
 
     @Override
@@ -87,9 +93,27 @@ public class LoginActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
 
                 if (task.isSuccessful()){
-                    Preferencias preferencias = new Preferencias(LoginActivity.this);
-                    String identificarUsuarioLogado = Base64Custon.codificarBase64(usuario.getEmail());
-                    preferencias.salvarDados(identificarUsuarioLogado);
+
+                    identificarUsuarioLogado = Base64Custon.codificarBase64(usuario.getEmail());
+                    firebase = ConfiguracaoFirebase.getFirebase()
+                            .child("usuarios")
+                            .child(identificarUsuarioLogado);
+                    valueEventListenerUsuario = new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            Usuario usuarioRecuperado = dataSnapshot.getValue(Usuario.class);
+                            Preferencias preferencias = new Preferencias(LoginActivity.this);
+                            preferencias.salvarDados(identificarUsuarioLogado, usuarioRecuperado.getNome() );
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    };
+                    firebase.addListenerForSingleValueEvent(valueEventListenerUsuario);
+
+
 
                     abrirTelaPrincipal();
                     Toast.makeText(LoginActivity.this, "Sucesso ao fazer loguin do usuário", Toast.LENGTH_LONG).show();

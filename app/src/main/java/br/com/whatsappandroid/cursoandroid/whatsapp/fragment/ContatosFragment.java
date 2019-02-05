@@ -67,11 +67,6 @@ public class ContatosFragment extends Fragment {
         contatos = new ArrayList<>();
 
         listView = (ListView) view.findViewById(R.id.lv_contatos);
-        /*adapter = new ArrayAdapter(
-                    getActivity(),
-                    R.layout.lista_contatos,
-                    contatos
-        );*/
         adapter = new ContatoAdapter(getActivity(),contatos);
         listView.setAdapter(adapter);
         Preferencias preferencias = new Preferencias(getActivity());
