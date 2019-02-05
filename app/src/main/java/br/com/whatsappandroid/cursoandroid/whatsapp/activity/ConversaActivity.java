@@ -20,6 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 import br.com.whatsappandroid.cursoandroid.whatsapp.R;
+import br.com.whatsappandroid.cursoandroid.whatsapp.adapter.MensagemAdapter;
 import br.com.whatsappandroid.cursoandroid.whatsapp.config.ConfiguracaoFirebase;
 import br.com.whatsappandroid.cursoandroid.whatsapp.helper.Base64Custon;
 import br.com.whatsappandroid.cursoandroid.whatsapp.helper.Preferencias;
@@ -32,8 +33,8 @@ public class ConversaActivity extends AppCompatActivity {
     private EditText editMensagem;
     private ImageButton botaoEnviar;
     private ListView listView;
-    private ArrayList<String> mensagens;
-    private ArrayAdapter adapter;
+    private ArrayList<Mensagem> mensagens;
+    private ArrayAdapter<Mensagem> adapter;
     private ValueEventListener valueEventListenerMensagem;
 
     private String idUsuarioRemetente;
@@ -48,7 +49,7 @@ public class ConversaActivity extends AppCompatActivity {
         toolbar      = (Toolbar) findViewById(R.id.tb_conversa);
         editMensagem = (EditText) findViewById(R.id.edit_mensagem);
         botaoEnviar  = (ImageButton) findViewById(R.id.bt_enviar);
-        listView     = (ListView) findViewById(R.id.ll_mensagem);
+        listView     = (ListView) findViewById(R.id.lv_conversas);
 
         Preferencias preferencias = new Preferencias(ConversaActivity.this);
         idUsuarioRemetente = preferencias.getIdentificador();
@@ -67,11 +68,8 @@ public class ConversaActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         mensagens = new ArrayList<>();
-        adapter = new ArrayAdapter(
-                ConversaActivity.this,
-                android.R.layout.simple_list_item_1,
-                mensagens
-        );
+
+        adapter = new MensagemAdapter(ConversaActivity.this, mensagens);
         listView.setAdapter(adapter);
 
         firebase = ConfiguracaoFirebase.getFirebase().child("mensagens")
@@ -85,7 +83,7 @@ public class ConversaActivity extends AppCompatActivity {
                 mensagens.clear();
                 for (DataSnapshot dados: dataSnapshot.getChildren()){
                     Mensagem mensagem = dados.getValue(Mensagem.class);
-                    mensagens.add(mensagem.getMensagem());
+                    mensagens.add(mensagem);
 
                 }
                 adapter.notifyDataSetChanged();
